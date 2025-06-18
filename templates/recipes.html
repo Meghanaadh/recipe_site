@@ -1,0 +1,6 @@
+<h2>All Recipes</h2>
+<ul>
+{% for r in recipes %}
+    <li><b>{{ r[1] }}</b><br>Ingredients: {{ r[2] }}<br>Instructions: {{ r[3] }}</li>
+{% endfor %}
+</ul>
