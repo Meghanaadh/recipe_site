@@ -1,6 +1,24 @@
-<h2>All Recipes</h2>
-<ul>
-{% for r in recipes %}
-    <li><b>{{ r[1] }}</b><br>Ingredients: {{ r[2] }}<br>Instructions: {{ r[3] }}</li>
-{% endfor %}
-</ul>
+{% extends "base.html" %}
+
+{% block title %}All Recipes{% endblock %}
+
+{% block content %}
+<div class="bg-white py-20">
+    <div class="container mx-auto px-6">
+        <h1 class="text-4xl font-bold font-serif text-center mb-12">All Our Recipes</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+            {% for recipe in recipes %}
+            <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="card-hover-effect bg-white rounded-lg shadow-lg overflow-hidden block">
+                <img src="{{ recipe.image_url or 'https://placehold.co/600x400/e2e8f0/333?text=Recipe' }}" alt="Image of {{ recipe.name }}" class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold font-serif mb-2">{{ recipe.name }}</h3>
+                    <p class="text-gray-600 line-clamp-3">{{ recipe.ingredients }}</p>
+                </div>
+            </a>
+            {% else %}
+            <p class="col-span-full text-center text-gray-500">No recipes have been added yet. <a href="{{ url_for('add_recipe') }}" class="text-green-600 hover:underline">Be the first!</a></p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,8 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head><title>Recipe Site</title></head>
-<body>
-<h1>Welcome to Recipe Sharing!</h1>
-<a href="/add">Add a Recipe</a> | <a href="/recipes">View Recipes</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="bg-cover bg-center h-[60vh] flex items-center justify-center text-white text-center relative" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop)">
+    <div class="relative z-10 px-4">
+        <h1 class="text-5xl md:text-7xl font-bold font-serif mb-4">Find Your Next Favorite Meal</h1>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8">Explore thousands of recipes from home cooks and top chefs, all in one place.</p>
+        <a href="{{ url_for('recipes') }}" class="bg-green-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-green-700 transition duration-300">Explore Recipes</a>
+    </div>
+</section>
+
+<section id="recipes" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold font-serif text-center mb-12">Featured Recipes</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {% for recipe in recipes %}
+            <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="card-hover-effect bg-white rounded-lg shadow-lg overflow-hidden block">
+                <img src="{{ recipe.image_url or 'https://placehold.co/600x400/e2e8f0/333?text=Recipe' }}" alt="Image of {{ recipe.name }}" class="w-full h-56 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold font-serif mb-2">{{ recipe.name }}</h3>
+                    <p class="text-gray-600 line-clamp-3">{{ recipe.ingredients }}</p>
+                </div>
+            </a>
+            {% else %}
+            <p>No featured recipes available right now.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
